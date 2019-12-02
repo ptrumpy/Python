@@ -2,5 +2,26 @@ import math
 
 menu={1:"1) Simple Interest",2:"2) Compound Interest"}
 
+def simpleInterest(capital, interestRate, time):
+    answer = (capital * interestRate * time) / 100
+    print(answer)
+        
+def compoundInterest(capital, interestRate, time):
+    answer = ((capital) * pow( (1 + (interestRate / 100)), 2))
+    print(answer)
+
 for k, v in menu.items():
   print(menu[k])
+selection = input("> ")
+print("You've selected " + selection)
+capital = float(input("Capital: "))
+interestRate = float(input("Interest Rate: "))
+time = float(input("Time (years):"))
+
+
+if selection == "1":
+  simpleInterest(capital, interestRate, time)
+elif selection == "2":
+  compoundInterest(capital, interestRate, time)
+else:
+  print("Please make a valid choice.")
