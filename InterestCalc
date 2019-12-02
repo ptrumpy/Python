@@ -1,0 +1,6 @@
+import math
+
+menu={1:"1) Simple Interest",2:"2) Compound Interest"}
+
+for k, v in menu.items():
+  print(menu[k])
