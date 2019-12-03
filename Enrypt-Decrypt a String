@@ -1,13 +1,14 @@
-text = input("Enter a string to encode: ")
-for i in text:
-  x = ord(i)-13
-  print(chr(x),end="") 
-  #print(x)
- # print(y)
-print("\n")
-text = input("Enter a string to decode: ")
-for i in text:
-  x = ord(i) + 13
-  print(chr(x),end="")
+choice = input("(e)ncrypt or (d)ecrypt a string? ")
+if choice =="e":
+  text = input("Enter a string to encode: ")
+  for i in text:
+    x = ord(i)-13
+    print(chr(x),end="") 
 
-  
+  print("\n")
+if choice =="d":
+  text = input("Enter a string to decode: ")
+  for i in text:
+    x = ord(i) + 13
+    print(chr(x),end="")
+  print("\n")
