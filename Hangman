@@ -12,11 +12,20 @@ print(letters_in_word)
 print('_ ' * num_letters)
 guesses = ''
 while chances > 0:
-  guess = input("Guess a letter: ")
+  guess = input("\nGuess a letter: ")
   guesses += guess
+  if guess not in words[word_choice]:
+      chances -=1
+      print('Sorry, that letter is not in the word.')
+      print('You have ' + str(chances) + ' chances remaining.')
+      if chances == 0:
+        print('Game Over')
+  else:
+    print('The letter ' + guess + ' is in the word.')
+    print('You still have ' + str(chances) + ' chances remaining.')
   for char in words[word_choice]:
     if char in guesses:
       print (char + " ", end="")
     else:
       print ('_ ',end="")
-      chances -=1
+    
