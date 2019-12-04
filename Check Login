@@ -1,26 +1,22 @@
-def locked(username, password):
-    userfile = open('username.txt')
-    passfile = open('password.txt')
-    realuser = userfile.read()
-    realpass = passfile.read()
-    print(realuser)
-    print(realpass)
-    userfile.close()
-    passfile.close()
-    if username.strip == realuser.strip and password.strip == realpass.strip:
-        print('This is the most secret message of them all')
-    else:
-        return False
+import getpass
 
-while True:
-    username = input('Username: ')
-    password = input('Password: ')
-    print(username)
-    print(password)
-    if locked(username.strip(), password.strip()) != False:
+tryAgain = 'yes'
+users = open('username.txt')
+usersText = (users.read())
+passwords = open('password.txt')
+passwordsText = (passwords.read())
+
+while (tryAgain == 'yes'):
+  username = getpass.getpass('Username: ')
+  if username in usersText:
+      password = getpass.getpass('Password: ')
+      if password in passwordsText:
+        print('Access granted')
         break
-    else:
+      else:
         print('Access denied')
-        
-        
-        #Not yet working
+        tryAgain= input('Try again? ')
+  else:
+    print('Username is not listed')
+    tryAgain = input('Try again? ')
+    
