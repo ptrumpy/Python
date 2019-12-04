@@ -1,0 +1,22 @@
+import random
+words = ['apple', 'banana', 'fortune', 'school', 'minion']
+chances = 7
+word_choice = random.randint(0,len(words)-1)
+print (words[word_choice])
+num_letters = len(words[word_choice])
+print(num_letters)
+letters_in_word = []
+for l in words[word_choice]:
+  letters_in_word.append(l)
+print(letters_in_word)
+print('_ ' * num_letters)
+guesses = ''
+while chances > 0:
+  guess = input("Guess a letter: ")
+  guesses += guess
+  for char in words[word_choice]:
+    if char in guesses:
+      print (char + " ", end="")
+    else:
+      print ('_ ',end="")
+      chances -=1
