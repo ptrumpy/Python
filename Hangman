@@ -1,6 +1,15 @@
 import random
 import csv
-with open('words.csv',newline= '') as f:
+difficulty = input('Choose a difficuly: e)asy, m)edium, or h)ard')
+if difficulty == 'e':
+  file_sfx = 'easy'
+elif difficulty == 'm':
+  file_sfx ='medium'
+elif difficulty == 'h':
+  file_sfx = 'hard'
+else: input('That wasn\'t one of the choices offered.  Please select e for easy, m for medium, or h for hard.')
+file_ext = '.txt'
+with open('words-' + file_sfx + file_ext,newline= '') as f:
   words = f.readlines()
   word = random.choice(words)
   word = word.rstrip()
