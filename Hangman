@@ -1,31 +1,49 @@
 import random
-words = ['apple', 'banana', 'fortune', 'school', 'minion']
+import csv
+with open('words.csv',newline= '') as f:
+  words = f.readlines()
+  word = random.choice(words)
+  word = word.rstrip()
+
+#words = ['apple', 'banana', 'fortune', 'school', 'minion']
 chances = 7
-word_choice = random.randint(0,len(words)-1)
-#print (words[word_choice])
-num_letters = len(words[word_choice])
+#print(word)
+num_letters = len(word)
 #print(num_letters)
-letters_in_word = []
-for l in words[word_choice]:
-  letters_in_word.append(l)
+#letters_in_word = []
+#for l in word:
+ # letters_in_word.append(l)
 #print(letters_in_word)
 #print('_ ' * num_letters)
 guesses = ''
+failed = 0
+letter_count = 0
+count = 0
 while chances > 0:
+  if count == num_letters:
+    print('\nYou win!')
+    break
   guess = input("\nGuess a letter: ")
-  guesses += guess
-  if guess not in words[word_choice]:
-      chances -=1
-      print('Sorry, that letter is not in the word.')
-      print('You have ' + str(chances) + ' chances remaining.')
-      if chances == 0:
-        print('Game Over')
+  if guess in guesses:
+    print('You have already guessed that letter')
   else:
-    print('The letter ' + guess + ' is in the word.')
-    print('You still have ' + str(chances) + ' chances remaining.')
-  for char in words[word_choice]:
-    if char in guesses:
-      print (char + " ", end="")
+    guesses += guess
+    if guess not in word:
+        chances -=1
+        failed +=1
+        print('Sorry, that letter is not in the word.')
+        print('You have ' + str(chances) + ' chances remaining.')
+        if chances == 0:
+          print('Game Over. The word was ' + str(word))
     else:
-      print ('_ ',end="")
+        letter_count = word.count(guess)
+        count += letter_count
+        print('The letter ' + guess + ' is in the word.')
+        print('You still have ' + str(chances) + ' chances remaining.')
+        for char in word:
+          if char in guesses:
+            print (char + " ", end="")
+          else:
+            print ('_ ',end="")
+      
     
