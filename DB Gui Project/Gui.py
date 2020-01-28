@@ -48,6 +48,7 @@ class Employee:
 
         ttk.Button(text='Delete Record').grid(row=7, column=0)
         ttk.Button(text='Edit Record').grid(row=7, column=1)
+        ttk.Button(text='Exit', command=sys.exit).grid(row=7, column=2)
 
         self.viewing_records()
 
@@ -70,7 +71,8 @@ class Employee:
         conn.close()
 
     def validation(self):
-        return len(self.name.get()) != 0 and len(self.age.get()) !=0 and len(self.designation.get()) !=0 and len(self.salary.get()) !=0
+        return len(self.name.get()) != 0 and len(self.age.get()) !=0 and len(self.designation.get()) != 0 \
+               and len(self.salary.get()) != 0
 
     def adding(self):
         if self.validation():
@@ -83,10 +85,12 @@ class Employee:
                                   database="Dev") as conn:
                 cur = conn.cursor()
                 cur.execute(query, parameters)
+                self.message['text'] = 'Record added (%s,%s,%s,%s)' % parameters
         else:
             self.message['text'] = 'Not all fields are filled in'
         self.viewing_records()
-
+        cur.close()
+        conn.close()
 
 
 if __name__ == '__main__':
