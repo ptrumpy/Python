@@ -1,0 +1,13 @@
+import random
+numTeams = int(input("How many teams will be playing?"))
+xtra = input("Will there be any extra teams used for drafting?")
+if xtra.lower() == 'y' or xtra.lower() =='Yes':
+        xtraTeams = int(input("How many?"))
+else:
+        xtraTeams = 0
+totTeams = numTeams + xtraTeams
+
+for i in range(0,(totTeams)):
+    rNum = random.randint(1,30)
+    """print("i=",i)"""
+    print(rNum)
