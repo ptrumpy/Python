@@ -1,13 +1,42 @@
 import random
 numTeams = int(input("How many teams will be playing?"))
-xtra = input("Will there be any extra teams used for drafting?")
-if xtra.lower() == 'y' or xtra.lower() =='Yes':
-        xtraTeams = int(input("How many?"))
+league = input("Will you be using (A)merican League, (N)ational League, or (B)oth?")
+if league.lower() == 'n':
+    filename = 'national.txt'
+    with open(filename) as f:
+        teamList = f.read().splitlines()
+        #print(teamList)
+    f.close()
+    numRandTeams = 15
+elif league.lower() =='a':
+    filename = 'american.txt'
+    with open(filename) as f:
+        teamList = f.read().splitlines()
+        #print(teamList)
+    f.close()
+    numRandTeams = 15
 else:
+    filename = 'national.txt'
+    with open(filename) as f:
+        teamList = f.read().splitlines()
+    f.close()
+    filename = 'american.txt'
+    with open(filename) as f:
+        for i in f:
+            teamList.extend(i.splitlines())
+    f.close()
+    numRandTeams = 30
+    #print(teamList)
+    xtra = ''
+while xtra.lower() not in('n','y','no','yes'):
+    xtra = input("Will there be any extra teams used for drafting? (Y)es/(N)o")
+    if xtra.lower() == 'y' or xtra.lower() =='Yes':
+        xtraTeams = int(input("How many?"))
+    elif xtra.lower() == 'n' or xtra.lower() =='no':
         xtraTeams = 0
+
 totTeams = numTeams + xtraTeams
 
-for i in range(0,(totTeams)):
-    rNum = random.randint(1,30)
-    """print("i=",i)"""
-    print(rNum)
+team = random.sample(teamList,totTeams)
+for i in team:
+    print(i)
