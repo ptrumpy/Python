@@ -1,0 +1,65 @@
+from tkinter import *
+from tkinter import messagebox
+from tkinter import scrolledtext
+from tkinter.ttk import *
+
+window = Tk()
+
+window.title("Random Team Generator")
+window.geometry('600x400')
+lbl = Label(window, text="Hello")
+lbl.grid(column=0, row=0)
+
+txt = Entry(window, width=10)
+txt.grid(column=1, row=0)
+
+def clicked():
+    res = "Welcome to " + txt.get()
+    lbl.configure(text= res)
+
+def checked():
+    res = "Checkbox is " + str(chk_state.get())
+    messagebox.showinfo("Checked State",res)
+
+def selected():
+    res = "Radio Button is " + str(select.get())
+    messagebox.showinfo("Radio Selection", res)
+
+btn = Button(window, text="Click Me", command=clicked)
+btn.grid(column=2, row=0)
+
+combo = Combobox(window)
+combo['values'] = (1,2,3,4,5, "Text")
+combo.current(1) #set the selected item
+combo.grid(column=1,row=1)
+
+
+chk_state = BooleanVar()
+chk_state.set(True) #set check state
+chk = Checkbutton(window, text="Choose", var=chk_state, command=checked)
+chk.grid(column= 0, row=1)
+
+#radio buttons
+select = IntVar()
+rad1 = Radiobutton(window,text='First', value=1, variable=select, command=selected)
+rad2 = Radiobutton(window, text='Second', value=2, variable=select, command=selected)
+rad3 = Radiobutton(window, text='Third', value=3, variable=select, command=selected)
+
+rad1.grid(column=2, row=1)
+rad2.grid(column=2, row=2)
+rad3.grid(column=2, row=3)
+
+sctxt = scrolledtext.ScrolledText(window, width=40,height=10)
+sctxt.insert(INSERT,'This is a scrolled text widget')
+sctxt.grid(column=1,row=6)
+
+#spinbox
+spin_var = IntVar()
+spin_var.set(4)
+spin = Spinbox(window, from_=1,to=30,width = 3, textvariable=spin_var)
+spin.grid(column = 0, row = 7)
+
+window.rowconfigure(9)
+window.columnconfigure(9)
+
+window.mainloop()
