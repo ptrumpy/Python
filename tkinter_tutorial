@@ -2,22 +2,30 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import scrolledtext
 from tkinter.ttk import *
+from random import randint
 
 window = Tk()
 
 window.title("Random Team Generator")
 window.geometry('600x400')
 lbl = Label(window, text="How many human players in the league?")
-lbl.grid(column=0, row=0, columnspan=2, sticky=E+N, padx=10)
+lbl.grid(column=0, row=0, columnspan=2, sticky=W+N, padx=10)
 
 lbl_xtra = Label(window, text="How many?")
 #make lbl_xtra invisible at runtime
 #lbl_xtra.grid(column=2, row=1)
-
-
+lbl_random_season = Label(window,text="test")
+lbl_random_season.grid(column=1,row=5,sticky=W)
 #entry widget
 #txt = Entry(window, width=10)
 #txt.grid(column=1, row=0, sticky=W)
+
+#label for team output listbox
+lbl_team = Label(window, text = "Team Assignments")
+lbl_team.grid(column=1,row=11)
+#listbox for team output
+lst_teams = Listbox(window,height=10, width=20)
+lst_teams.grid(column = 1, row=12)
 
 '''
 def clicked():
@@ -42,6 +50,22 @@ def selected():
         team_pool = 30
     #messagebox.showinfo(title=None, message="Number of teams: " + str(team_pool))
 
+#season choice function
+def seas_choice():
+    res = choice.get()
+    global lbl_random_season
+    if res == 1:
+        cbo_season.grid_remove()
+        rnd_season = seasons[randint(0, len(seasons) - 1)]
+        lbl_random_season = Label(window, text=str(rnd_season))
+        lbl_random_season.grid(column=1,row=5,sticky=W)
+    else:
+
+        #if lbl_random_season.winfo_exists():
+        lbl_random_season.grid_remove()
+        cbo_season.grid(column=1, row=5, sticky=W + N)
+
+
 #button
 #btn = Button(window, text="Click Me", command=clicked)
 #btn.grid(column=2, row=0)
@@ -55,6 +79,21 @@ combo['values'] = (max_teams)
 combo['width'] = 2
 combo.current(3)  # set the selected item
 combo.grid(column=2, row=0, sticky=W+N)
+
+lbl_chosen_season = Label(window,text="Season")
+lbl_chosen_season.grid(column =1, row=4, sticky=W )
+
+
+
+#build season combo box
+seasons=[1982, 1994, 2000, 2003, 2007, 2008, 2015, 2016, 2019]
+
+seasons.sort(reverse=True)
+cbo_season = Combobox(window)
+cbo_season['values'] = seasons
+cbo_season['width'] = 5
+cbo_season.current(0)  # set the selected item
+
 
 chk_state = BooleanVar()
 chk_state.set(False)  # set check state
@@ -79,9 +118,25 @@ rad1.grid(column=2, row=1, sticky=W, pady=2)
 rad2.grid(column=2, row=2, sticky=W, pady=2)
 rad3.grid(column=2, row=3, sticky=W, pady=2)
 
-sctxt = scrolledtext.ScrolledText(window, width=40, height=10)
-sctxt.insert(INSERT, 'This is a scrolled text widget')
-sctxt.grid(column=1, row=15, columnspan=4, pady=80)
+#season frame
+fr_season = Frame(window,borderwidth=2, relief='groove')
+fr_season.grid(column = 5, row=0, sticky=W+N, padx=10, rowspan=2)
+#season radio
+lbl_season = Label(fr_season, text="Season", background="cyan")
+choice = IntVar()
+seas_choice1 = Radiobutton(fr_season, text ="Random", value=1, variable=choice,command=seas_choice)
+seas_choice2 = Radiobutton(fr_season, text ="I'll choose", value=2, variable=choice,command=seas_choice)
+
+
+
+lbl_season.grid(column=1, row=0)
+seas_choice1.grid(column=1, row=1, sticky=W, pady=2)
+seas_choice2.grid(column=1, row=2, sticky=W, pady=2)
+
+#scrolled text
+#sctxt = scrolledtext.ScrolledText(window, width=40, height=10)
+#sctxt.insert(INSERT, 'This is a scrolled text widget')
+#sctxt.grid(column=1, row=15, columnspan=4, pady=80)
 
 # spinbox
 spin_var = IntVar()
