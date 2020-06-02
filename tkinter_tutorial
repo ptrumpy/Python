@@ -7,59 +7,87 @@ window = Tk()
 
 window.title("Random Team Generator")
 window.geometry('600x400')
-lbl = Label(window, text="Hello")
-lbl.grid(column=0, row=0)
+lbl = Label(window, text="How many human players in the league?")
+lbl.grid(column=0, row=0, columnspan=2, sticky=E+N, padx=10)
 
-txt = Entry(window, width=10)
-txt.grid(column=1, row=0)
+lbl_xtra = Label(window, text="How many?")
+#make lbl_xtra invisible at runtime
+#lbl_xtra.grid(column=2, row=1)
 
+
+#entry widget
+#txt = Entry(window, width=10)
+#txt.grid(column=1, row=0, sticky=W)
+
+'''
 def clicked():
     res = "Welcome to " + txt.get()
-    lbl.configure(text= res)
+    lbl.configure(text=res)
+'''
 
 def checked():
-    res = "Checkbox is " + str(chk_state.get())
-    messagebox.showinfo("Checked State",res)
+    if chk_state.get() == True:
+        lbl_xtra.grid(column=1, row=1, sticky=E, padx=10)
+        spin.grid(column=2, row=1, sticky=W)
+    if chk_state.get() == False:
+        lbl_xtra.grid_remove()
+        spin.grid_remove()
 
+team_pool=0
 def selected():
-    res = "Radio Button is " + str(select.get())
-    messagebox.showinfo("Radio Selection", res)
+    res = select.get()
+    if res <3:
+        team_pool = 15
+    else:
+        team_pool = 30
+    #messagebox.showinfo(title=None, message="Number of teams: " + str(team_pool))
 
-btn = Button(window, text="Click Me", command=clicked)
-btn.grid(column=2, row=0)
+#button
+#btn = Button(window, text="Click Me", command=clicked)
+#btn.grid(column=2, row=0)
+
+max_teams = []
+for x in range(30):
+    max_teams.append(x+1)
 
 combo = Combobox(window)
-combo['values'] = (1,2,3,4,5, "Text")
-combo.current(1) #set the selected item
-combo.grid(column=1,row=1)
-
+combo['values'] = (max_teams)
+combo['width'] = 2
+combo.current(3)  # set the selected item
+combo.grid(column=2, row=0, sticky=W+N)
 
 chk_state = BooleanVar()
-chk_state.set(True) #set check state
-chk = Checkbutton(window, text="Choose", var=chk_state, command=checked)
-chk.grid(column= 0, row=1)
+chk_state.set(False)  # set check state
+chk = Checkbutton(window, text="Extra Teams?", var=chk_state, command=checked)
+chk.grid(column=0, row=1, sticky=W,padx=10)
 
+
+#frame
+league = Frame(window, borderwidth=2, relief='groove')
+league.grid(column=4, row=0, sticky=E, padx=50, rowspan=2)
+
+#label for frame
+lbl_league = Label(league, text="Choose League", background='cyan')
 #radio buttons
 select = IntVar()
-rad1 = Radiobutton(window,text='First', value=1, variable=select, command=selected)
-rad2 = Radiobutton(window, text='Second', value=2, variable=select, command=selected)
-rad3 = Radiobutton(window, text='Third', value=3, variable=select, command=selected)
+rad1 = Radiobutton(league, text='American', value=1, variable=select, command=selected)
+rad2 = Radiobutton(league, text='National', value=2, variable=select, command=selected)
+rad3 = Radiobutton(league, text='Both', value=3, variable=select, command=selected)
 
-rad1.grid(column=2, row=1)
-rad2.grid(column=2, row=2)
-rad3.grid(column=2, row=3)
+lbl_league.grid(column=2, row=0)
+rad1.grid(column=2, row=1, sticky=W, pady=2)
+rad2.grid(column=2, row=2, sticky=W, pady=2)
+rad3.grid(column=2, row=3, sticky=W, pady=2)
 
-sctxt = scrolledtext.ScrolledText(window, width=40,height=10)
-sctxt.insert(INSERT,'This is a scrolled text widget')
-sctxt.grid(column=1,row=6)
+sctxt = scrolledtext.ScrolledText(window, width=40, height=10)
+sctxt.insert(INSERT, 'This is a scrolled text widget')
+sctxt.grid(column=1, row=15, columnspan=4, pady=80)
 
-#spinbox
+# spinbox
 spin_var = IntVar()
-spin_var.set(4)
-spin = Spinbox(window, from_=1,to=30,width = 3, textvariable=spin_var)
-spin.grid(column = 0, row = 7)
+spin_var.set(2)
+spin = Spinbox(window, from_=1, to=30, width=3, textvariable=spin_var)
 
-window.rowconfigure(9)
-window.columnconfigure(9)
+
 
 window.mainloop()
