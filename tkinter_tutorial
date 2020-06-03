@@ -14,7 +14,7 @@ lbl.grid(column=0, row=0, columnspan=2, sticky=W+N, padx=10)
 lbl_xtra = Label(window, text="How many?")
 #make lbl_xtra invisible at runtime
 #lbl_xtra.grid(column=2, row=1)
-lbl_random_season = Label(window,text="test")
+lbl_random_season = Label(window,text="")
 lbl_random_season.grid(column=1,row=5,sticky=W)
 #entry widget
 #txt = Entry(window, width=10)
@@ -27,12 +27,6 @@ lbl_team.grid(column=1,row=11)
 lst_teams = Listbox(window,height=10, width=20)
 lst_teams.grid(column = 1, row=12)
 
-'''
-def clicked():
-    res = "Welcome to " + txt.get()
-    lbl.configure(text=res)
-'''
-
 def checked():
     if chk_state.get() == True:
         lbl_xtra.grid(column=1, row=1, sticky=E, padx=10)
@@ -41,6 +35,38 @@ def checked():
         lbl_xtra.grid_remove()
         spin.grid_remove()
 
+def clicked():
+    num_teams = 0
+    num_xtra = 0
+    teamList = []
+    league_select = select.get()
+    num_teams = int(combo.get())
+    if chk_state.get()== True:
+        num_xtra = int(spin.get())
+    messagebox.showinfo("Spinbox Value",str(num_teams + num_xtra))
+    if league_select == 1:
+        filename = 'american.txt'
+        with open(filename) as f:
+            teamList = f.read().splitlines()
+            print(teamList)
+        f.close
+    elif league_select == 2:
+        filename = 'national.txt'
+        with open(filename) as f:
+            teamList = f.read().splitlines()
+            print(teamList)
+        f.close
+    else:
+        filename = 'national.txt'
+        with open(filename) as f:
+            teamList = f.read().splitlines()
+        f.close()
+        filename = 'american.txt'
+        with open(filename) as f:
+            for i in f:
+                teamList.extend(i.splitlines())
+            print(teamList)
+        f.close()
 team_pool=0
 def selected():
     res = select.get()
@@ -67,8 +93,8 @@ def seas_choice():
 
 
 #button
-#btn = Button(window, text="Click Me", command=clicked)
-#btn.grid(column=2, row=0)
+btn = Button(window, text="Get Teams", command=clicked)
+btn.grid(column=5, row=5)
 
 max_teams = []
 for x in range(30):
@@ -120,18 +146,19 @@ rad3.grid(column=2, row=3, sticky=W, pady=2)
 
 #season frame
 fr_season = Frame(window,borderwidth=2, relief='groove')
-fr_season.grid(column = 5, row=0, sticky=W+N, padx=10, rowspan=2)
+fr_season.grid(column = 5, row=0, sticky=W+N, rowspan=2)
 #season radio
-lbl_season = Label(fr_season, text="Season", background="cyan")
+lbl_season = Label(fr_season, text="Season", background="cyan",anchor=CENTER)
 choice = IntVar()
 seas_choice1 = Radiobutton(fr_season, text ="Random", value=1, variable=choice,command=seas_choice)
 seas_choice2 = Radiobutton(fr_season, text ="I'll choose", value=2, variable=choice,command=seas_choice)
 
 
 
-lbl_season.grid(column=1, row=0)
-seas_choice1.grid(column=1, row=1, sticky=W, pady=2)
-seas_choice2.grid(column=1, row=2, sticky=W, pady=2)
+lbl_season.grid(column=0, row=0,sticky=E+W)
+seas_choice1.grid(column=0, row=1, sticky=W, pady=2)
+seas_choice2.grid(column=0, row=2, sticky=W, pady=2)
+
 
 #scrolled text
 #sctxt = scrolledtext.ScrolledText(window, width=40, height=10)
