@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import scrolledtext
 from tkinter.ttk import *
+import random
 from random import randint
 
 window = Tk()
@@ -24,7 +25,7 @@ lbl_random_season.grid(column=1,row=5,sticky=W)
 lbl_team = Label(window, text = "Team Assignments")
 lbl_team.grid(column=1,row=11)
 #listbox for team output
-lst_teams = Listbox(window,height=10, width=20)
+lst_teams = Listbox(window,height=10, width=25)
 lst_teams.grid(column = 1, row=12)
 
 def checked():
@@ -38,23 +39,26 @@ def checked():
 def clicked():
     num_teams = 0
     num_xtra = 0
+    lst_teams.delete('0','end')
     teamList = []
     league_select = select.get()
     num_teams = int(combo.get())
     if chk_state.get()== True:
         num_xtra = int(spin.get())
-    messagebox.showinfo("Spinbox Value",str(num_teams + num_xtra))
-    if league_select == 1:
+    #messagebox.showinfo("Spinbox Value",str(num_teams + num_xtra))
+    if league_select <1:
+        messagebox.showinfo("League Choice","No league has been chosen.")
+    elif league_select == 1:
         filename = 'american.txt'
         with open(filename) as f:
             teamList = f.read().splitlines()
-            print(teamList)
+            #print(teamList)
         f.close
     elif league_select == 2:
         filename = 'national.txt'
         with open(filename) as f:
             teamList = f.read().splitlines()
-            print(teamList)
+            #print(teamList)
         f.close
     else:
         filename = 'national.txt'
@@ -65,8 +69,12 @@ def clicked():
         with open(filename) as f:
             for i in f:
                 teamList.extend(i.splitlines())
-            print(teamList)
+            #print(teamList)
         f.close()
+    team = random.sample(teamList, num_teams + num_xtra)
+    for i in team:
+        lst_teams.insert(END,i)
+
 team_pool=0
 def selected():
     res = select.get()
